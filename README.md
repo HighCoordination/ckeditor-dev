@@ -1,14 +1,14 @@
 # CKEditor 4 - The best browser-based WYSIWYG editor
 
-[![devDependencies Status](https://david-dm.org/ckeditor/ckeditor-dev/dev-status.svg)](https://david-dm.org/ckeditor/ckeditor-dev?type=dev)
-
 This repository contains the development version of CKEditor 4.
 
-**Attention:** The code in this repository should be used locally and for
-development purposes only. We do not recommend using it in production environment
-because the user experience will be very limited. For that purpose, you should
-either build the editor (see below) or use an official release available on the
-[CKEditor website](https://ckeditor.com/ckeditor-4/).
+This fork includes patches to show dropdown elements in the toolbar as divs
+instead of iframes, which couldn't be opened when operating inside a sandboxed iframe.
+
+It will only be tested with our specific requirements. As such we cannot guarantee
+that it will work with all plugins in all situation where the original CKEditor will.
+
+Patches will be to the release/4.10.x branch.
 
 ## Code Installation
 

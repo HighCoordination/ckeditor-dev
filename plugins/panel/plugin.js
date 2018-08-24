@@ -300,9 +300,7 @@
 					return;
 				var links = this.element.getElementsByTag( 'a' );
 				var item = links.getItem( this._.focusIndex = index );
-
-				// Safari need focus on the iframe window first(https://dev.ckeditor.com/ticket/3389), but we need
-				// lock the blur to avoid hiding the panel.
+				
 				item.focus();
 
 				this.onMark && this.onMark( item );

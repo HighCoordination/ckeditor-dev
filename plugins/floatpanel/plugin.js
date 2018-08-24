@@ -155,8 +155,7 @@ CKEDITOR.plugins.add( 'floatpanel', {
 
 				var element = this.element,
 					iframe = this._.iframe,
-					// Edge prefers iframe's window to the iframe, just like the rest of the browsers (https://dev.ckeditor.com/ticket/13143).
-					focused = CKEDITOR.env.ie && !CKEDITOR.env.edge ? iframe : new CKEDITOR.dom.window( iframe.$.contentWindow ),
+					focused = element,
 					doc = element.getDocument(),
 					positionedAncestor = this._.parentElement.getPositionedAncestor(),
 					position = offsetParent.getDocumentPosition( doc ),
@@ -201,12 +200,13 @@ CKEDITOR.plugins.add( 'floatpanel', {
 					// guarantee they will be firing in all situations. (https://dev.ckeditor.com/ticket/3068, https://dev.ckeditor.com/ticket/3222 )
 					CKEDITOR.event.useCapture = true;
 
-					focused.on( 'blur', function( ev ) {
+					this.element.on( 'focusout', function( ev ) {
 						// As we are using capture to register the listener,
 						// the blur event may get fired even when focusing
 						// inside the window itself, so we must ensure the
 						// target is out of it.
-						if ( !this.allowBlur() || ev.data.getPhase() != CKEDITOR.EVENT_PHASE_AT_TARGET )
+						var related = ev.data.$.relatedTarget;
+						if ( !this.allowBlur() || related && related !== this._.editor.element.$ )
 							return;
 
 						if ( this.visible && !this._.activeChild ) {
@@ -228,7 +228,7 @@ CKEDITOR.plugins.add( 'floatpanel', {
 						}
 					}, this );
 
-					focused.on( 'focus', function() {
+					this.element.on( 'focusin', function() {
 						this._.focused = true;
 						this.hideChild();
 						this.allowBlur( true );
@@ -271,7 +271,7 @@ CKEDITOR.plugins.add( 'floatpanel', {
 
 						if ( block.autoSize ) {
 							var panelDoc = block.element.getDocument(),
-								width = ( ( CKEDITOR.env.webkit || CKEDITOR.env.edge ) ? block.element : panelDoc.getBody() ).$.scrollWidth;
+								width = block.element.$.scrollWidth;
 
 							// Account for extra height needed due to IE quirks box model bug:
 							// http://en.wikipedia.org/wiki/Internet_Explorer_box_model_bug
@@ -414,9 +414,6 @@ CKEDITOR.plugins.add( 'floatpanel', {
 						if ( CKEDITOR.env.webkit )
 							CKEDITOR.document.getBody().$.scrollTop = scrollTop;
 
-						// We need this get fired manually because of unfired focus() function.
-						this.allowBlur( true );
-
 						// Ensure that the first item is focused (https://dev.ckeditor.com/ticket/16804).
 						if ( CKEDITOR.env.ie ) {
 							CKEDITOR.tools.setTimeout( function() {
@@ -461,7 +458,7 @@ CKEDITOR.plugins.add( 'floatpanel', {
 				}
 
 				// Restore last focused element or simply focus panel window.
-				var focus = this._.lastFocused || this._.iframe.getFrameDocument().getWindow();
+				var focus = this._.lastFocused || this._.editor.element;
 				focus.focus();
 			},
 
@@ -483,8 +480,6 @@ CKEDITOR.plugins.add( 'floatpanel', {
 			hide: function( returnFocus ) {
 				if ( this.visible && ( !this.onHide || this.onHide.call( this ) !== true ) ) {
 					this.hideChild();
-					// Blur previously focused element. (https://dev.ckeditor.com/ticket/6671)
-					CKEDITOR.env.gecko && this._.iframe.getFrameDocument().$.activeElement.blur();
 					this.element.setStyle( 'display', 'none' );
 					this.visible = 0;
 					this.element.getFirst().removeCustomData( 'activePanel' );
@@ -497,6 +492,11 @@ CKEDITOR.plugins.add( 'floatpanel', {
 							focusReturn.getWindow().$.focus();
 
 						focusReturn.focus();
+
+					}else if(this._.editor.element){
+						// prevent closing of toolbar when closing a panel
+						// element is undefined when the editor is closed (e.g. via clicking outside)
+						this._.editor.element.focus();
 					}
 
 					delete this._.lastFocused;

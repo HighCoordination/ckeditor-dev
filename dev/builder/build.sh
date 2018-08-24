@@ -89,3 +89,7 @@ fi
 
 echo ""
 echo "Release created in the \"release\" directory."
+
+echo "It will now be copied to HiCoMVCFramework/node_modules"
+rm -r /c/hico/codebase/hicomvc/HiCoMVCFramework/node_modules/ckeditor/
+cp -r release/ckeditor /c/hico/codebase/hicomvc/HiCoMVCFramework/node_modules/ckeditor/

@@ -67,6 +67,7 @@ panel contents and color panels check menu.css and colorpanel.css.
 {
     width: 150px;
     height: 170px;
+	 overflow: auto;
 }
 
 /* The IFRAME the panel is wrapped into. */

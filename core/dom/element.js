@@ -1793,7 +1793,7 @@ CKEDITOR.dom.element.clearMarkers = function( database, element, removeFromDatab
 		 * @returns {CKEDITOR.dom.document} The inner document.
 		 */
 		getFrameDocument: function() {
-			var $ = this.$;
+			var $ = this.$ || window;
 
 			try {
 				// In IE, with custom document.domain, it may happen that
@@ -1806,7 +1806,7 @@ CKEDITOR.dom.element.clearMarkers = function( database, element, removeFromDatab
 				$.src = $.src;
 			}
 
-			return $ && new CKEDITOR.dom.document( $.contentWindow.document );
+			return $ && new CKEDITOR.dom.document( $.document );
 		},
 
 		/**

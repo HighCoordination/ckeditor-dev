@@ -157,7 +157,7 @@ CKEDITOR.plugins.add( 'colorbutton', {
 						automaticColor = '#ffffff';
 
 					if ( config.colorButton_enableAutomatic !== false ) {
-						this._.panel._.iframe.getFrameDocument().getById( colorBoxId ).setStyle( 'background-color', automaticColor );
+						this.document.getById( colorBoxId ).setStyle( 'background-color', automaticColor );
 					}
 
 					var range = selection && selection.getRanges()[ 0 ];
@@ -246,9 +246,9 @@ CKEDITOR.plugins.add( 'colorbutton', {
 					' onclick="CKEDITOR.tools.callFunction(', clickFn, ',null,\'', type, '\');return false;"' +
 					' href="javascript:void(\'', lang.auto, '\')"' +
 					' role="option" aria-posinset="1" aria-setsize="', total, '">' +
-						'<table role="presentation" cellspacing=0 cellpadding=0 width="100%">' +
+						'<table role="presentation" cellspacing=0 cellpadding=0 style="width: 100%">' +
 							'<tr>' +
-								'<td colspan="' + colorsPerRow + '" align="center"><span class="cke_colorbox" id="', colorBoxId, '"></span>', lang.auto, '</td>' +
+								'<td colspan="' + colorsPerRow + '" style="text-align: center; line-height: 26px"><span class="cke_colorbox" id="', colorBoxId, '"></span>', lang.auto, '</td>' +
 							'</tr>' +
 						'</table>' +
 					'</a>' );
@@ -287,7 +287,7 @@ CKEDITOR.plugins.add( 'colorbutton', {
 			if ( moreColorsEnabled ) {
 				output.push( '</tr>' +
 					'<tr>' +
-						'<td colspan="' + colorsPerRow + '" align="center">' +
+						'<td colspan="' + colorsPerRow + '" style="text-align: center">' +
 							'<a class="cke_colormore" _cke_focus=1 hidefocus=true' +
 								' title="', lang.more, '"' +
 								' onclick="CKEDITOR.tools.callFunction(', clickFn, ',\'?\',\'', type, '\');return false;"' +

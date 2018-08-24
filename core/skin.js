@@ -267,36 +267,36 @@
 		}
 	}
 
-	CKEDITOR.on( 'instanceLoaded', function( evt ) {
-		// The chameleon feature is not for IE quirks.
-		if ( CKEDITOR.env.ie && CKEDITOR.env.quirks )
-			return;
+	// CKEDITOR.on( 'instanceLoaded', function( evt ) {
+	// 	// The chameleon feature is not for IE quirks.
+	// 	if ( CKEDITOR.env.ie && CKEDITOR.env.quirks )
+	// 		return;
 
-		var editor = evt.editor,
-			showCallback = function( event ) {
-				var panel = event.data[ 0 ] || event.data;
-				var iframe = panel.element.getElementsByTag( 'iframe' ).getItem( 0 ).getFrameDocument();
+	// 	var editor = evt.editor,
+	// 		showCallback = function( event ) {
+	// 			var panel = event.data[ 0 ] || event.data;
+	// 			var iframe = panel.element.getElementsByTag( 'iframe' ).getItem( 0 ).getFrameDocument();
 
-				// Add stylesheet if missing.
-				if ( !iframe.getById( 'cke_ui_color' ) ) {
-					var node = getStylesheet( iframe );
-					uiColorMenus.push( node );
+	// 			// Add stylesheet if missing.
+	// 			if ( !iframe.getById( 'cke_ui_color' ) ) {
+	// 				var node = getStylesheet( iframe );
+	// 				uiColorMenus.push( node );
 
-					var color = editor.getUiColor();
-					// Set uiColor for new panel.
-					if ( color )
-						updateStylesheets( [ node ], CKEDITOR.skin.chameleon( editor, 'panel' ), [ [ uiColorRegexp, color ] ] );
+	// 				var color = editor.getUiColor();
+	// 				// Set uiColor for new panel.
+	// 				if ( color )
+	// 					updateStylesheets( [ node ], CKEDITOR.skin.chameleon( editor, 'panel' ), [ [ uiColorRegexp, color ] ] );
 
-				}
-			};
+	// 			}
+	// 		};
 
-		editor.on( 'panelShow', showCallback );
-		editor.on( 'menuShow', showCallback );
+	// 	editor.on( 'panelShow', showCallback );
+	// 	editor.on( 'menuShow', showCallback );
 
-		// Apply UI color if specified in config.
-		if ( editor.config.uiColor )
-			editor.setUiColor( editor.config.uiColor );
-	} );
+	// 	// Apply UI color if specified in config.
+	// 	if ( editor.config.uiColor )
+	// 		editor.setUiColor( editor.config.uiColor );
+	// } );
 } )();
 
 /**

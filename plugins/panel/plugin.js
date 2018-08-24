@@ -38,7 +38,7 @@
 
 		this.id = CKEDITOR.tools.getNextId();
 		this.document = document;
-		this.isFramed = this.forceIFrame || this.css.length;
+		// this.isFramed = this.forceIFrame || this.css.length;
 
 		this._ = {
 			blocks: {}
@@ -144,6 +144,7 @@
 						CKEDITOR.env.air && CKEDITOR.tools.callFunction( onLoad );
 					} else {
 						holder = this.document.getById( this.id );
+						this.isLoaded = true;
 					}
 
 					this._.holder = holder;
@@ -302,8 +303,6 @@
 
 				// Safari need focus on the iframe window first(https://dev.ckeditor.com/ticket/3389), but we need
 				// lock the blur to avoid hiding the panel.
-				if ( CKEDITOR.env.webkit )
-					item.getDocument().getWindow().focus();
 				item.focus();
 
 				this.onMark && this.onMark( item );
@@ -348,8 +347,6 @@
 					beforeMark();
 				}
 
-				if ( CKEDITOR.env.webkit )
-					focused.getDocument().getWindow().focus();
 				focused.focus();
 
 				this.onMark && this.onMark( focused );

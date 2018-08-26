@@ -724,27 +724,6 @@
 				} ]
 			},
 			{
-				id: 'upload',
-				label: linkLang.upload,
-				title: linkLang.upload,
-				hidden: true,
-				filebrowser: 'uploadButton',
-				elements: [ {
-					type: 'file',
-					id: 'upload',
-					label: commonLang.upload,
-					style: 'height:40px',
-					size: 29
-				},
-				{
-					type: 'fileButton',
-					id: 'uploadButton',
-					label: commonLang.uploadSubmit,
-					filebrowser: 'info:url',
-					'for': [ 'upload', 'upload' ]
-				} ]
-			},
-			{
 				id: 'advanced',
 				label: linkLang.advanced,
 				title: linkLang.advanced,

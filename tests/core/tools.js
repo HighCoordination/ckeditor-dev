@@ -953,6 +953,5 @@
 				assert.areSame( test.base64, CKEDITOR.tools.convertBytesToBase64( test.bytes ) );
 			} );
 		}
-
 	} );
 } )();

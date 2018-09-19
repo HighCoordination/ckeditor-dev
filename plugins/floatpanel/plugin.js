@@ -145,6 +145,9 @@ CKEDITOR.plugins.add( 'floatpanel', {
 				var panel = this._.panel,
 					block = panel.showBlock( name );
 
+				// force selection check, because the 'selectionChange' event is not always triggered (especially on mobile devices)
+				this._.editor.selectionChange( 1 );
+
 				this._.showBlockParams = [].slice.call( arguments );
 				this.allowBlur( false );
 
@@ -154,7 +157,6 @@ CKEDITOR.plugins.add( 'floatpanel', {
 				this._.hideTimeout = 0;
 
 				var element = this.element,
-					iframe = this._.iframe,
 					focused = element,
 					doc = element.getDocument(),
 					positionedAncestor = this._.parentElement.getPositionedAncestor(),
@@ -200,7 +202,7 @@ CKEDITOR.plugins.add( 'floatpanel', {
 					// guarantee they will be firing in all situations. (https://dev.ckeditor.com/ticket/3068, https://dev.ckeditor.com/ticket/3222 )
 					CKEDITOR.event.useCapture = true;
 
-					this.element.on( 'focusout', function( ev ) {
+					focused.on( 'focusout', function( ev ) {
 						// As we are using capture to register the listener,
 						// the blur event may get fired even when focusing
 						// inside the window itself, so we must ensure the
@@ -228,7 +230,7 @@ CKEDITOR.plugins.add( 'floatpanel', {
 						}
 					}, this );
 
-					this.element.on( 'focusin', function() {
+					focused.on( 'focusin', function() {
 						this._.focused = true;
 						this.hideChild();
 						this.allowBlur( true );
